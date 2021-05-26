@@ -1,4 +1,4 @@
-import { ChangeEvent, createContext, useState } from 'react';
+import { ChangeEvent, createContext, useState } from "react";
 
 type ContextType = Partial<ReturnType<typeof useTime>>;
 
@@ -18,7 +18,7 @@ type ResponseType = {
 
 function useTime() {
   const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
-  const [timeZone, setTimeZone] = useState('');
+  const [timeZone, setTimeZone] = useState("");
   const [response, setResponse] = useState<ResponseType>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
@@ -28,9 +28,9 @@ function useTime() {
     setLoading(true);
     try {
       const data = { time: getTimeString(), timeZone: parseFloat(timeZone) };
-      const res = await fetch('http://localhost:3001/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("https://tuten-test-2-server.herokuapp.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(await res.text());
@@ -48,7 +48,7 @@ function useTime() {
     if (!valueString) return setTime((prev) => ({ ...prev, [name]: 0 }));
 
     const value = parseInt(valueString);
-    if (name === 'hours') {
+    if (name === "hours") {
       if (value >= 0 && value < 24)
         setTime((prev) => ({ ...prev, hours: value }));
       return;
@@ -80,5 +80,5 @@ function useTime() {
 }
 
 function twoDigits(value: number): string {
-  return value >= 10 ? value.toString() : '0' + value;
+  return value >= 10 ? value.toString() : "0" + value;
 }
